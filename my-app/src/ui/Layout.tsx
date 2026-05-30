@@ -8,31 +8,22 @@ export function Layout() {
   const nome = localStorage.getItem('nome');
 
   return (
-    <div className="app-container">
-      <header className="app-header">
-        <div className="app-brand">
-          Projeto Biblioteca
-        </div>
-
-        <nav className="app-nav">
-          <Link to="/">Home</Link>
-
-          {!auth && <Link to="/login">Login</Link>}
-          {!auth && <Link to="/register">Cadastro</Link>}
-          {auth && <Link to="/gestaoUsuario">Gestão de Usuários</Link>}
-
-        </nav>
-
-        <div className="app-user">
+    <>
+      <header>
+        <nav aria-label="Navegação principal">
+          <Link to="/">Projeto Biblioteca</Link>
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            {!auth && <li><Link to="/login">Login</Link></li>}
+            {!auth && <li><Link to="/register">Cadastro</Link></li>}
+            {auth && <li><Link to="/usuarios">Gestão de Usuários</Link></li>}
+            {auth && <li><Link to="/livros">Livros</Link></li>}  {/* ← NOVO */}
+          </ul>
           {auth && (
-            <span className="app-user-name">
-              Olá, {nome ?? 'usuário'}
-            </span>
+            <span>Olá, {nome ?? 'usuário'}</span>
           )}
-
           {auth && (
             <button
-              className="btn-danger"
               type="button"
               onClick={() => {
                 logout();
@@ -42,11 +33,11 @@ export function Layout() {
               Sair
             </button>
           )}
-        </div>
+        </nav>
       </header>
       <main>
         <Outlet />
       </main>
-    </div>
+    </>
   );
 }
