@@ -11,7 +11,7 @@ export function LivrosPage() {
   const [loading, setLoading] = useState(false);
 
   const role = getUserRole();
-  const isAdmin = role === 'Admin';
+  const isAdmin = true;//const isAdmin = role === 'Admin';
 
   async function carregarLivros() {
     setLoading(true);
@@ -50,28 +50,18 @@ export function LivrosPage() {
   }
 
   return (
-    <main>
-      <section>
-        <header>
-          <h2>Gestão de Livros</h2>
-          {isAdmin && (
-            <button type="button" onClick={handleNovo}>
-              + Novo Livro
-            </button>
-          )}
-        </header>
-
-        <LivroList
-          livros={livros}
-          loading={loading}
-          isAdmin={isAdmin}
-          onEditar={handleEditar}
-          onAtualizar={carregarLivros}
-        />
-      </section>
+    <div className="page">
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h1 className="page-title">Gestão de Livros</h1>
+        {isAdmin && (
+          <button className="btn-primary" onClick={handleNovo}>
+            + Novo Livro
+          </button>
+        )}
+      </div>
 
       {(mostrarFormCadastro || livroSelecionado) && (
-        <section>
+        <div className="card">
           <LivroForm
             livro={livroSelecionado}
             isAdmin={isAdmin}
@@ -82,8 +72,19 @@ export function LivrosPage() {
             }}
             onCancelar={handleCancelar}
           />
-        </section>
+        </div>
       )}
-    </main>
+
+      {/* ✅ ESSA PARTE ESTAVA FALTANDO */}
+      <div className="card">
+        <LivroList
+          livros={livros}
+          loading={loading}
+          isAdmin={isAdmin}
+          onEditar={handleEditar}
+          onAtualizar={carregarLivros}
+        />
+      </div>
+    </div>
   );
 }

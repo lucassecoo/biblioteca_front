@@ -9,35 +9,30 @@ export function Layout() {
 
   return (
     <>
-      <header>
-        <nav aria-label="Navegação principal">
-          <Link to="/">Projeto Biblioteca</Link>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            {!auth && <li><Link to="/login">Login</Link></li>}
-            {!auth && <li><Link to="/register">Cadastro</Link></li>}
-            {auth && <li><Link to="/usuarios">Gestão de Usuários</Link></li>}
-            {auth && <li><Link to="/livros">Livros</Link></li>}  {/* ← NOVO */}
-          </ul>
-          {auth && (
-            <span>Olá, {nome ?? 'usuário'}</span>
-          )}
+      <header className="app-header">
+        <span className="app-brand">📚 Projeto Biblioteca</span>
+        <nav className="app-nav">
+          <Link to="/home">Home</Link>
+          {!auth && <Link to="/login">Login</Link>}
+          {!auth && <Link to="/register">Cadastro</Link>}
+          {auth && <Link to="/usuarios">Gestão de Usuários</Link>}
+          {auth && <Link to="/livros">Livros</Link>}
+        </nav>
+        <div className="app-user">
+          {auth && <span>Olá, {nome ?? 'usuário'}</span>}
           {auth && (
             <button
-              type="button"
-              onClick={() => {
-                logout();
-                navigate('/login');
-              }}
+              className="btn-danger"
+              onClick={() => { logout(); navigate('/login', { replace: true }); }}
             >
               Sair
             </button>
           )}
-        </nav>
+        </div>
       </header>
-      <main>
+      <div className="app-container">
         <Outlet />
-      </main>
+      </div>
     </>
   );
 }

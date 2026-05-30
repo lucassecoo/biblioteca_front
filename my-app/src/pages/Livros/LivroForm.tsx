@@ -92,6 +92,7 @@ export function LivroForm({ livro, isAdmin, onSalvo, onCancelar }: Props) {
           Titulo: titulo.trim(),
           Autor: autor.trim(),
           AnoPublicacao: Number(anoPublicacao),
+          QuantidadeDisponivel: Number(quantidadeDisponivel),
         });
         alert('Livro atualizado com sucesso!');
       } else {
@@ -160,6 +161,8 @@ export function LivroForm({ livro, isAdmin, onSalvo, onCancelar }: Props) {
         <div className="form-group">
           <label>Quantidade Disponível *</label>
           <input
+            id="quantidadeDisponivel"
+            name="quantidadeDisponivel"
             type="number"
             value={quantidadeDisponivel}
             onChange={(e) => setQuantidadeDisponivel(e.target.value)}

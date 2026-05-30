@@ -20,6 +20,7 @@ export interface LivroUpdatePayload {
   Titulo: string;
   Autor: string;
   AnoPublicacao: number;
+  QuantidadeDisponivel: number;
 }
 
 export async function getLivros(): Promise<Livro[]> {
