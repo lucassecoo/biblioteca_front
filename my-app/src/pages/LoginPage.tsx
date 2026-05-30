@@ -16,7 +16,7 @@ export function LoginPage() {
 
     try {
       await login(emailValue, senha);
-      navigate("/categorias"); //VERIFICARRRRRRRRRR
+      navigate("/home", { replace: true }) //VERIFICARRRRRRRRRR
     } catch (err: any) {
       const msg =
         err?.response?.data?.message ??
@@ -37,10 +37,12 @@ export function LoginPage() {
           <label htmlFor="email">Email</label>
           <input
             id="email"
+            name="email"
             type="email"
             value={emailValue}
             onChange={(e) => setEmailValue(e.target.value)}
             autoComplete="username"
+            required
           />
         </div>
 
@@ -48,10 +50,12 @@ export function LoginPage() {
           <label htmlFor="senha">Senha</label>
           <input
             id="senha"
+            name="senha"
             type="password"
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
             autoComplete="current-password"
+            required
           />
         </div>
 

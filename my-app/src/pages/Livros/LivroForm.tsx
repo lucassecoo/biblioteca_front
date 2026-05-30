@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { cadastrarLivro, updateLivro, Livro } from '../../api/livro';
+import { cadastrarLivro, updateLivro, Livro } from '../../api/livro'; // ✅ corrigido
 
 interface Props {
   livro: Livro | null;
@@ -84,9 +84,7 @@ export function LivroForm({ livro, isAdmin, onSalvo, onCancelar }: Props) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!validate()) return;
-    if (!isAdmin) return;
-
+    if (!validate() || !isAdmin) return;
     setSubmitting(true);
     try {
       if (isEdicao && livro) {
@@ -118,110 +116,68 @@ export function LivroForm({ livro, isAdmin, onSalvo, onCancelar }: Props) {
   }
 
   return (
-    <article>
-      <h3>{isEdicao ? 'Editar Livro' : 'Cadastrar Novo Livro'}</h3>
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <h3 className="page-title">{isEdicao ? 'Editar Livro' : 'Cadastrar Novo Livro'}</h3>
 
-      <form onSubmit={handleSubmit} noValidate aria-label={isEdicao ? 'Formulário de edição de livro' : 'Formulário de cadastro de livro'}>
-        <fieldset>
-          <legend>{isEdicao ? 'Dados do Livro' : 'Novo Livro'}</legend>
+      <div className="form-group">
+        <label>Título *</label>
+        <input
+          type="text"
+          value={titulo}
+          onChange={(e) => setTitulo(e.target.value)}
+          maxLength={150}
+          placeholder="Ex: Dom Casmurro"
+        />
+        {errors.titulo && <span className="form-error">{errors.titulo}</span>}
+      </div>
 
-          <div>
-            <label htmlFor="livro-titulo">Título *</label>
-            <input
-              id="livro-titulo"
-              type="text"
-              value={titulo}
-              onChange={(e) => setTitulo(e.target.value)}
-              maxLength={150}
-              required
-              aria-required="true"
-              aria-describedby={errors.titulo ? 'erro-titulo' : undefined}
-              aria-invalid={!!errors.titulo}
-              placeholder="Ex: Dom Casmurro"
-            />
-            {errors.titulo && (
-              <span id="erro-titulo" role="alert" style={{ color: 'red' }}>
-                {errors.titulo}
-              </span>
-            )}
-          </div>
+      <div className="form-group">
+        <label>Autor *</label>
+        <input
+          type="text"
+          value={autor}
+          onChange={(e) => setAutor(e.target.value)}
+          maxLength={120}
+          placeholder="Ex: Machado de Assis"
+        />
+        {errors.autor && <span className="form-error">{errors.autor}</span>}
+      </div>
 
-          <div>
-            <label htmlFor="livro-autor">Autor *</label>
-            <input
-              id="livro-autor"
-              type="text"
-              value={autor}
-              onChange={(e) => setAutor(e.target.value)}
-              maxLength={120}
-              required
-              aria-required="true"
-              aria-describedby={errors.autor ? 'erro-autor' : undefined}
-              aria-invalid={!!errors.autor}
-              placeholder="Ex: Machado de Assis"
-            />
-            {errors.autor && (
-              <span id="erro-autor" role="alert" style={{ color: 'red' }}>
-                {errors.autor}
-              </span>
-            )}
-          </div>
+      <div className="form-group">
+        <label>Ano de Publicação *</label>
+        <input
+          type="number"
+          value={anoPublicacao}
+          onChange={(e) => setAnoPublicacao(e.target.value)}
+          min={ANO_MIN}
+          max={ANO_MAX}
+          placeholder={`Ex: ${ANO_MAX}`}
+        />
+        {errors.anoPublicacao && <span className="form-error">{errors.anoPublicacao}</span>}
+      </div>
 
-          <div>
-            <label htmlFor="livro-ano">Ano de Publicação *</label>
-            <input
-              id="livro-ano"
-              type="number"
-              value={anoPublicacao}
-              onChange={(e) => setAnoPublicacao(e.target.value)}
-              min={ANO_MIN}
-              max={ANO_MAX}
-              required
-              aria-required="true"
-              aria-describedby={errors.anoPublicacao ? 'erro-ano' : undefined}
-              aria-invalid={!!errors.anoPublicacao}
-              placeholder={`Ex: ${ANO_MAX}`}
-            />
-            {errors.anoPublicacao && (
-              <span id="erro-ano" role="alert" style={{ color: 'red' }}>
-                {errors.anoPublicacao}
-              </span>
-            )}
-          </div>
-
-          {!isEdicao && (
-            <div>
-              <label htmlFor="livro-quantidade">Quantidade Disponível *</label>
-              <input
-                id="livro-quantidade"
-                type="number"
-                value={quantidadeDisponivel}
-                onChange={(e) => setQuantidadeDisponivel(e.target.value)}
-                min={0}
-                required
-                aria-required="true"
-                aria-describedby={errors.quantidadeDisponivel ? 'erro-qtd' : undefined}
-                aria-invalid={!!errors.quantidadeDisponivel}
-                placeholder="Ex: 5"
-              />
-              {errors.quantidadeDisponivel && (
-                <span id="erro-qtd" role="alert" style={{ color: 'red' }}>
-                  {errors.quantidadeDisponivel}
-                </span>
-              )}
-            </div>
-          )}
-        </fieldset>
-
-        <div>
-          <button type="submit" disabled={submitting}>
-            {submitting ? 'Salvando...' : isEdicao ? 'Atualizar' : 'Cadastrar'}
-          </button>
-          <button type="button" onClick={onCancelar} disabled={submitting}>
-            Cancelar
-          </button>
+      {!isEdicao && (
+        <div className="form-group">
+          <label>Quantidade Disponível *</label>
+          <input
+            type="number"
+            value={quantidadeDisponivel}
+            onChange={(e) => setQuantidadeDisponivel(e.target.value)}
+            min={0}
+            placeholder="Ex: 5"
+          />
+          {errors.quantidadeDisponivel && <span className="form-error">{errors.quantidadeDisponivel}</span>}
         </div>
-      </form>
-    </article>
+      )}
+
+      <div className="form-actions">
+        <button className="btn-primary" type="submit" disabled={submitting}>
+          {submitting ? 'Salvando...' : isEdicao ? 'Atualizar' : 'Cadastrar'}
+        </button>
+        <button className="btn-secondary" type="button" onClick={onCancelar}>
+          Cancelar
+        </button>
+      </div>
+    </form>
   );
 }

@@ -62,7 +62,7 @@ export function RegisterPage() {
 
     try {
       await cadastrarUsuario({ nome, email, senha, confirmarSenha });
-      navigate('/login');
+      navigate("/login", { replace: true });
     } catch (err: any) {
       const msg =
         err?.response?.data?.message ??

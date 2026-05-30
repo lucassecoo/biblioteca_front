@@ -13,9 +13,11 @@
     "@types/react-dom": "^19.2.3",
     "axios": "^1.16.1",
     "react": "^19.2.6",
+    "react-data-table-component": "^8.3.0",
     "react-dom": "^19.2.6",
     "react-router-dom": "^7.16.0",
     "react-scripts": "5.0.1",
+    "styled-components": "^6.4.2",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -42,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.36"
   }
 }

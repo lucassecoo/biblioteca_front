@@ -1,8 +1,7 @@
 import React from 'react';
 
 export function HomePage() {
-  const baseUrl =
-    process.env.REACT_APP_API_BASE_URL ?? 'https://localhost:5001';
+  const baseUrl = process.env.REACT_APP_API_BASE_URL ?? 'https://localhost:5001';
 
   return (
     <div className="page">
