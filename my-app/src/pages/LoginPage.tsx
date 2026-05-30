@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { login } from '../api/auth';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { login } from "../api/auth";
 
 export function LoginPage() {
   const navigate = useNavigate();
-  const [emailValue, setEmailValue] = useState('');
-  const [senha, setSenha] = useState('');
+  const [emailValue, setEmailValue] = useState("");
+  const [senha, setSenha] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -16,12 +16,12 @@ export function LoginPage() {
 
     try {
       await login(emailValue, senha);
-      navigate('/categorias');
+      navigate("/categorias"); //VERIFICARRRRRRRRRR
     } catch (err: any) {
       const msg =
         err?.response?.data?.message ??
         err?.message ??
-        'Falha ao autenticar. Verifique usuário/senha e se a API está rodando.';
+        "Falha ao autenticar. Verifique usuário/senha e se a API está rodando.";
       setError(String(msg));
     } finally {
       setLoading(false);
@@ -56,12 +56,8 @@ export function LoginPage() {
         </div>
 
         <div className="form-actions">
-          <button
-            className="btn-primary"
-            type="submit"
-            disabled={loading}
-          >
-            {loading ? 'Entrando...' : 'Entrar'}
+          <button className="btn-primary" type="submit" disabled={loading}>
+            {loading ? "Entrando..." : "Entrar"}
           </button>
         </div>
 

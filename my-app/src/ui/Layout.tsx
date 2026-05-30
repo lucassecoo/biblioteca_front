@@ -19,6 +19,7 @@ export function Layout() {
 
           {!auth && <Link to="/login">Login</Link>}
           {!auth && <Link to="/register">Cadastro</Link>}
+          {auth && <Link to="/gestaoUsuario">Gestão de Usuários</Link>}
 
         </nav>
 

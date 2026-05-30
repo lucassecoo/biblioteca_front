@@ -201,3 +201,53 @@ select:focus {
     flex-wrap: wrap;
   }
 }
+
+/* ===== USUÁRIOS ===== */
+
+.usuarios-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.usuario-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.usuario-table th,
+.usuario-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.usuario-table th {
+  background: #f9fafb;
+  font-weight: 600;
+}
+
+.usuario-table tr:hover {
+  background: #f9fafb;
+}
+
+.usuario-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.usuario-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.usuario-form h2 {
+  color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .usuarios-container {
+    grid-template-columns: 1fr;
+  }
+}
