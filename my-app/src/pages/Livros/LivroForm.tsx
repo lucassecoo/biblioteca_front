@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { cadastrarLivro, updateLivro, Livro } from '../../api/livro'; // ✅ corrigido
+import { cadastrarLivro, updateLivro, Livro } from '../../api/livro';
 
 interface Props {
   livro: Livro | null;
@@ -25,7 +25,6 @@ export function LivroForm({ livro, isAdmin, onSalvo, onCancelar }: Props) {
   const [quantidadeDisponivel, setQuantidadeDisponivel] = useState('');
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
-
   const isEdicao = livro !== null;
 
   useEffect(() => {
@@ -69,13 +68,12 @@ export function LivroForm({ livro, isAdmin, onSalvo, onCancelar }: Props) {
       newErrors.anoPublicacao = `O ano deve ser um número inteiro entre ${ANO_MIN} e ${ANO_MAX}.`;
     }
 
-    if (!isEdicao) {
-      const qtd = Number(quantidadeDisponivel);
-      if (quantidadeDisponivel === '') {
-        newErrors.quantidadeDisponivel = 'A quantidade é obrigatória.';
-      } else if (!Number.isInteger(qtd) || qtd < 0) {
-        newErrors.quantidadeDisponivel = 'A quantidade deve ser um número inteiro não negativo.';
-      }
+    // ✅ Valida quantidade tanto no cadastro quanto na edição
+    const qtd = Number(quantidadeDisponivel);
+    if (quantidadeDisponivel === '') {
+      newErrors.quantidadeDisponivel = 'A quantidade é obrigatória.';
+    } else if (!Number.isInteger(qtd) || qtd < 0) {
+      newErrors.quantidadeDisponivel = 'A quantidade deve ser um número inteiro não negativo.';
     }
 
     setErrors(newErrors);
@@ -92,7 +90,7 @@ export function LivroForm({ livro, isAdmin, onSalvo, onCancelar }: Props) {
           Titulo: titulo.trim(),
           Autor: autor.trim(),
           AnoPublicacao: Number(anoPublicacao),
-          QuantidadeDisponivel: Number(quantidadeDisponivel),
+          QuantidadeDisponivel: Number(quantidadeDisponivel), // ✅ ADICIONADO
         });
         alert('Livro atualizado com sucesso!');
       } else {
@@ -117,70 +115,42 @@ export function LivroForm({ livro, isAdmin, onSalvo, onCancelar }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <h3 className="page-title">{isEdicao ? 'Editar Livro' : 'Cadastrar Novo Livro'}</h3>
+    <form onSubmit={handleSubmit}>
+      <h3>{isEdicao ? 'Editar Livro' : 'Cadastrar Novo Livro'}</h3>
 
       <div className="form-group">
-        <label>Título *</label>
-        <input
-          type="text"
-          value={titulo}
-          onChange={(e) => setTitulo(e.target.value)}
-          maxLength={150}
-          placeholder="Ex: Dom Casmurro"
-        />
+        <label htmlFor="titulo">Título *</label>
+        <input id="titulo" name="titulo" type="text" value={titulo}
+          onChange={(e) => setTitulo(e.target.value)} maxLength={150} placeholder="Ex: Dom Casmurro" />
         {errors.titulo && <span className="form-error">{errors.titulo}</span>}
       </div>
 
       <div className="form-group">
-        <label>Autor *</label>
-        <input
-          type="text"
-          value={autor}
-          onChange={(e) => setAutor(e.target.value)}
-          maxLength={120}
-          placeholder="Ex: Machado de Assis"
-        />
+        <label htmlFor="autor">Autor *</label>
+        <input id="autor" name="autor" type="text" value={autor}
+          onChange={(e) => setAutor(e.target.value)} maxLength={120} placeholder="Ex: Machado de Assis" />
         {errors.autor && <span className="form-error">{errors.autor}</span>}
       </div>
 
       <div className="form-group">
-        <label>Ano de Publicação *</label>
-        <input
-          type="number"
-          value={anoPublicacao}
-          onChange={(e) => setAnoPublicacao(e.target.value)}
-          min={ANO_MIN}
-          max={ANO_MAX}
-          placeholder={`Ex: ${ANO_MAX}`}
-        />
+        <label htmlFor="anoPublicacao">Ano de Publicação *</label>
+        <input id="anoPublicacao" name="anoPublicacao" type="number" value={anoPublicacao}
+          onChange={(e) => setAnoPublicacao(e.target.value)} min={ANO_MIN} max={ANO_MAX} placeholder={`Ex: ${ANO_MAX}`} />
         {errors.anoPublicacao && <span className="form-error">{errors.anoPublicacao}</span>}
       </div>
 
-      {!isEdicao && (
-        <div className="form-group">
-          <label>Quantidade Disponível *</label>
-          <input
-            id="quantidadeDisponivel"
-            name="quantidadeDisponivel"
-            type="number"
-            value={quantidadeDisponivel}
-            onChange={(e) => setQuantidadeDisponivel(e.target.value)}
-            min={0}
-            placeholder="Ex: 5"
-          />
-          {errors.quantidadeDisponivel && <span className="form-error">{errors.quantidadeDisponivel}</span>}
-        </div>
-      )}
-
-      <div className="form-actions">
-        <button className="btn-primary" type="submit" disabled={submitting}>
-          {submitting ? 'Salvando...' : isEdicao ? 'Atualizar' : 'Cadastrar'}
-        </button>
-        <button className="btn-secondary" type="button" onClick={onCancelar}>
-          Cancelar
-        </button>
+      {/* ✅ Campo aparece tanto no cadastro quanto na edição */}
+      <div className="form-group">
+        <label htmlFor="quantidadeDisponivel">Quantidade Disponível *</label>
+        <input id="quantidadeDisponivel" name="quantidadeDisponivel" type="number" value={quantidadeDisponivel}
+          onChange={(e) => setQuantidadeDisponivel(e.target.value)} min={0} placeholder="Ex: 5" />
+        {errors.quantidadeDisponivel && <span className="form-error">{errors.quantidadeDisponivel}</span>}
       </div>
+
+      <button type="submit" className="btn-primary" disabled={submitting}>
+        {submitting ? 'Salvando...' : isEdicao ? 'Atualizar' : 'Cadastrar'}
+      </button>
+      <button type="button" className="btn-secondary" onClick={onCancelar}>Cancelar</button>
     </form>
   );
 }
