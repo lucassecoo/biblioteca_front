@@ -167,6 +167,7 @@ export function EmprestimoList({
             'Emprestado' && (
             <button
               className="btn-outline"
+              style={{ whiteSpace: 'nowrap' }}
               onClick={() =>
                 handleDevolver(
                   row.usuarioId,
@@ -180,6 +181,7 @@ export function EmprestimoList({
 
         <button
         className="btn-outline"
+        style={{ whiteSpace: 'nowrap' }}
         onClick={() =>
         handleDetalhes(row.id)
         }
@@ -190,6 +192,7 @@ export function EmprestimoList({
           {isAdmin && (
             <button
               className="btn-danger"
+              style={{ whiteSpace: 'nowrap' }}
               onClick={() =>
                 handleDelete(row.id)
               }

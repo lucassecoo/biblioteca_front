@@ -1,5 +1,4 @@
 import { http } from './http';
-import { LoginResponse } from './types';
 
 export async function login(email: string, senha: string) {
   const { data } = await http.post('/api/Auth/login', { email, senha });

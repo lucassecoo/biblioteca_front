@@ -16,7 +16,7 @@ export function LoginPage() {
 
     try {
       await login(emailValue, senha);
-      navigate("/home", { replace: true }) //VERIFICARRRRRRRRRR
+      navigate("/home", { replace: true })
     } catch (err: any) {
       const msg =
         err?.response?.data?.message ??
