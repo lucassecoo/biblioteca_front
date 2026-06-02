@@ -90,7 +90,7 @@ export function LivroForm({ livro, isAdmin, onSalvo, onCancelar }: Props) {
           Titulo: titulo.trim(),
           Autor: autor.trim(),
           AnoPublicacao: Number(anoPublicacao),
-          QuantidadeDisponivel: Number(quantidadeDisponivel), // ✅ ADICIONADO
+          QuantidadeDisponivel: Number(quantidadeDisponivel),
         });
         alert('Livro atualizado com sucesso!');
       } else {

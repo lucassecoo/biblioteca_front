@@ -10,8 +10,7 @@ export function LivrosPage() {
   const [mostrarFormCadastro, setMostrarFormCadastro] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const role = getUserRole();
-  const isAdmin = true;//const isAdmin = role === 'Admin';
+  const isAdmin =  getUserRole() === 'Admin';
 
   async function carregarLivros() {
     setLoading(true);
@@ -75,7 +74,6 @@ export function LivrosPage() {
         </div>
       )}
 
-      {/* ✅ ESSA PARTE ESTAVA FALTANDO */}
       <div className="card">
         <LivroList
           livros={livros}
