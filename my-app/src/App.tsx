@@ -1,11 +1,10 @@
-import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
-import { UsuariosPage } from './pages/usuarios/UsuariosPage'; // ← manter minúsculo (pasta é 'usuarios')
+import { UsuariosPage } from './pages/usuarios/UsuariosPage'; 
 import { EmprestimosPage } from './pages/Emprestimo/EmprestimosPage';
-import { LivrosPage } from './pages/Livros/LivrosPage';       // ← L maiúsculo (pasta é 'Livros')
+import { LivrosPage } from './pages/Livros/LivrosPage';
 import { RequireAuth } from './routes/RequireAuth';
 import { Layout } from './ui/Layout';
 
